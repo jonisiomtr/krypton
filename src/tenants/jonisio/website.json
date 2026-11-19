@@ -1,0 +1,40 @@
+{
+  "enabled": false,
+  "theme": "modern",
+  "customDomain": null,
+  "seo": {
+    "title": "açai",
+    "description": "Site oficial da empresa",
+    "keywords": ""
+  },
+  "hero": {
+    "title": "açai",
+    "subtitle": "Melhores produtos e serviços para você",
+    "imageUrl": "",
+    "showLogo": true
+  },
+  "about": {
+    "enabled": true,
+    "title": "Sobre Nós",
+    "content": "Somos uma empresa dedicada a oferecer os melhores produtos e serviços."
+  },
+  "colors": {
+    "primary": "#3b82f6",
+    "secondary": "#8b5cf6",
+    "accent": "#10b981",
+    "background": "#0f172a",
+    "text": "#ffffff"
+  },
+  "features": {
+    "showPrices": true,
+    "showCategories": true,
+    "showWhatsAppButton": true,
+    "whatsappNumber": "559191873356"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "twitter": "",
+    "linkedin": ""
+  }
+}

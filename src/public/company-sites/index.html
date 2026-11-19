@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="" id="page-description" />
+  <title id="page-title">raiane conteudos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --padrao: var(--primary-color, #FF8000);
+      --padrao-rgb: var(--primary-color-rgb, 255, 128, 0);
+      --padrao-hover: var(--primary-color-hover, #E67300);
+      --padrao-soft: rgba(var(--padrao-rgb), 0.08);
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="brand" href="#topo" aria-label="Voltar ao topo">
+        <img id="header-logo" src="" onerror="this.onerror=null;this.src='assets/logo.svg'" alt="Logo" />
+        <span class="brand__text">
+          <span class="brand__name" id="brand-name">Nome da Loja</span>
+          <span class="brand__tag" id="brand-tag">Tagline</span>
+        </span>
+      </a>
+
+      <nav class="app-nav" aria-label="Navegação principal">
+        <a href="#topo" class="active">Início</a>
+        <a href="#catalogo">Cardápio</a>
+        <a href="#promocoes">Promos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container-loja" id="topo">
+    <section class="header-banner" aria-label="Capa da loja">
+      <div class="header-banner__copy">
+        <h1 id="banner-title">Nome da Loja</h1>
+        <p id="banner-subtitle">Descrição da loja</p>
+      </div>
+    </section>
+
+    <div class="store-logo" aria-hidden="true">
+      <img id="store-logo" src="" onerror="this.onerror=null;this.src='assets/logo.svg'" alt="" />
+    </div>
+
+    <section class="store-content" aria-label="Informações da loja">
+      <div class="store-content__top">
+        <div>
+          <h1 class="store-name" id="store-name">Nome da Loja</h1>
+          <div class="store-rating">
+            <strong id="store-rating">0,0</strong>
+            <span>/ 5</span>
+            <i class="fas fa-star"></i>
+            <span>Ver mais</span>
+          </div>
+          <div class="store-badges">
+            <span class="store-badge store-badge--open" id="status-badge"><i class="fas fa-circle"></i> <span id="status-text">Aberto agora</span></span>
+            <span class="store-badge"><i class="fas fa-motorcycle"></i> <span id="delivery-time">Delivery 50 a 60 min</span></span>
+            <span class="store-badge"><i class="fas fa-store"></i> <span id="pickup-time">Retirada 30 min</span></span>
+            <span class="store-badge"><i class="fas fa-wallet"></i> <span id="min-order">Pedido mínimo R$ 10,00</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="store-address">
+        <i class="fas fa-map-marker-alt"></i>
+        <span id="store-description">Descrição da loja</span>
+      </div>
+
+      <div class="store-meta" aria-label="Informações rápidas">
+        <span><i class="fas fa-clock"></i> <span id="meta-delivery-time">50 a 60 min</span></span>
+        <span><i class="fas fa-money-bill-wave"></i> <span id="meta-delivery-fee">R$ 6,00 - R$ 15,00</span></span>
+        <span><i class="fab fa-whatsapp"></i> <span id="meta-whatsapp">falar com a loja</span></span>
+        <span><i class="fas fa-biking"></i> <span id="meta-pickup-time">Retirada 30 min</span></span>
+      </div>
+    </section>
+
+    <section class="user-info" aria-label="Conta">
+      <p>Faça login para acompanhar pedidos e usar fidelidade.</p>
+      <button class="login-button" type="button">Fazer Login</button>
+    </section>
+
+    <section class="aqp-banner-scroll" id="promocoes" aria-label="Cupons">
+      <div id="coupons-container"></div>
+    </section>
+
+    <section class="search-container-header" aria-label="Busca">
+      <div class="search-box-header">
+        <i class="fas fa-search"></i>
+        <input id="searchInput" class="search-input" type="search" placeholder="Buscar produtos..." autocomplete="off" />
+      </div>
+    </section>
+
+    <nav class="groups" aria-label="Categorias">
+      <ul class="list-group" id="categoryNav"></ul>
+    </nav>
+
+    <main class="main-products" id="catalogo" aria-live="polite">
+      <!-- O catálogo é renderizado por app.js -->
+    </main>
+
+    <footer class="footer" id="contato">
+      <div class="footer-container">
+        <div class="footer-column">
+          <div class="footer-logo">
+            <img id="footer-logo" src="" onerror="this.onerror=null;this.src='assets/logo.svg'" alt="Logo" />
+            <h2 id="footer-name">Nome da Loja</h2>
+          </div>
+          <p class="footer-slogan" id="footer-slogan">Slogan da loja</p>
+        </div>
+
+        <div class="footer-column">
+          <h3>Ajuda</h3>
+          <ul class="footer-info">
+            <li><i class="fas fa-clock"></i> <span id="footer-delivery-time">Delivery: 50 a 60 min</span></li>
+            <li><i class="fas fa-store"></i> <span id="footer-pickup-time">Retirada: 30 min</span></li>
+            <li><i class="fas fa-wallet"></i> <span id="footer-min-order">Pedido mínimo: R$ 10,00</span></li>
+            <li><i class="fas fa-map-marker-alt"></i> Monte sua entrega no checkout</li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Contato</h3>
+          <ul class="footer-info">
+            <li><i class="fab fa-whatsapp"></i> <span id="footer-whatsapp">WhatsApp da loja</span></li>
+            <li><i class="fas fa-envelope"></i> <span id="footer-email">email@loja.com</span></li>
+            <li><i class="fas fa-phone"></i> <span id="footer-phone">(11) 99999-0000</span></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Links</h3>
+          <div class="footer-links">
+            <a href="#catalogo">Cardápio</a>
+            <a href="#promocoes">Cupons</a>
+            <a href="#topo">Voltar ao topo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">© <span id="year"></span> <span id="footer-copyright">Nome da Loja</span> — Site powered by KRYPTON</p>
+      </div>
+    </footer>
+  </main>
+
+  <div class="mobile-buttons-container">
+    <div class="cart-button-mobile">
+      <button id="openCartMobile" type="button" aria-label="Abrir sacola">
+        <span class="cart-left">
+          <i class="fas fa-shopping-bag"></i>
+          <span>Sacola</span>
+        </span>
+        <span class="cart-right">
+          <span id="cartCountMobile" class="cart-quantity">0</span>
+          <span id="cartTotalMobile">R$ 0,00</span>
+        </span>
+      </button>
+    </div>
+    <div class="orders-button-mobile">
+      <button id="openOrdersMobile" type="button" aria-label="Ver pedidos">
+        <span class="cart-left">
+          <i class="fas fa-receipt"></i>
+          <span>Pedidos</span>
+        </span>
+        <span class="cart-right">
+          <span id="ordersCountMobile" class="cart-quantity" style="display: none;">0</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="desktop-buttons-container">
+    <div class="cart-button-desktop">
+      <button id="openCartDesktop" type="button" aria-label="Abrir sacola">
+        <span class="cart-left"><i class="fas fa-shopping-bag"></i><span>Sacola</span></span>
+        <span class="cart-right"><span id="cartCountDesktop" class="cart-quantity">0</span><span id="cartTotalDesktop">R$ 0,00</span></span>
+      </button>
+    </div>
+    <div class="orders-button-desktop">
+      <button id="openOrdersDesktop" type="button" aria-label="Ver pedidos">
+        <span class="cart-left"><i class="fas fa-receipt"></i><span>Pedidos</span></span>
+        <span class="cart-right"><span id="ordersCountDesktop" class="cart-quantity" style="display: none;">0</span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Navegação inferior">
+    <a href="#topo" class="active"><i class="fas fa-home"></i><span>Início</span></a>
+    <a href="#catalogo"><i class="fas fa-utensils"></i><span>Pedidos</span></a>
+    <a href="#promocoes"><i class="fas fa-tag"></i><span>Promos</span></a>
+    <a href="#" id="bottomCart"><i class="fas fa-shopping-bag"></i><span>Sacola</span></a>
+    <a href="#"><i class="fas fa-user"></i><span>Perfil</span></a>
+  </nav>
+
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <aside class="cart-container" id="cartDrawer" aria-label="Sacola de compras" aria-hidden="true">
+    <header class="cart-header">
+      <div class="cart-subtitle">Total sem a entrega</div>
+      <div class="cart-store">
+        <h2 id="cart-store-name">Nome da Loja</h2>
+        <a class="view-menu" href="#catalogo" id="viewMenu">Ver cardápio</a>
+      </div>
+      <button class="close-cart" id="closeCart" type="button" aria-label="Fechar sacola"><i class="fas fa-times"></i></button>
+    </header>
+
+    <div class="cart-progress" id="cartProgress" aria-live="polite">
+      <div class="cart-progress__label">
+        <span id="cartProgressText">Adicione itens para começar</span>
+        <strong id="cartProgressValue">R$ 0,00</strong>
+      </div>
+      <div class="cart-progress__bar"><div class="cart-progress__fill" id="cartProgressFill"></div></div>
+    </div>
+
+    <div class="cart-content">
+      <div class="cart-items">
+        <h3>Itens do pedido</h3>
+        <div id="cartItems"></div>
+      </div>
+
+      <section class="cart-coupon" aria-label="Cupom">
+        <h4><i class="fas fa-ticket-alt"></i> Cupom</h4>
+        <form class="coupon-form" id="couponForm">
+          <input id="couponInput" type="text" placeholder="Código de cupom" autocomplete="off" />
+          <button type="submit">Aplicar</button>
+        </form>
+        <div id="couponApplied"></div>
+      </section>
+
+      <section class="cart-summary" aria-label="Resumo">
+        <div class="summary-item"><span>Subtotal</span><strong id="summarySubtotal">R$ 0,00</strong></div>
+        <div class="summary-item delivery"><span>Taxa de entrega</span><strong id="summaryDelivery">R$ 0,00</strong></div>
+        <div class="summary-item discount"><span>Desconto</span><strong id="summaryDiscount">- R$ 0,00</strong></div>
+        <div class="summary-total"><span>Total</span><strong id="summaryTotal">R$ 0,00</strong></div>
+      </section>
+    </div>
+
+    <footer class="cart-footer">
+      <button class="checkout-button" id="goCheckout" type="button" disabled>Finalizar pedido</button>
+    </footer>
+  </aside>
+
+  <div class="popup" id="productModal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+    <div class="popup-content">
+      <div class="popup-header">
+        <img id="productModalImage" src="assets/placeholder.svg" alt="" />
+        <button class="details-back" id="closeProductModal" type="button" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button>
+        <span class="details-product-promotion hidden" id="productModalPromo"></span>
+      </div>
+      <div class="details-information">
+        <div class="details-information-header">
+          <h2 class="details-product-name" id="productModalTitle"></h2>
+          <p class="details-product-description" id="productModalDescription"></p>
+          <div class="details-product-price" id="productModalPrice"></div>
+        </div>
+
+        <div id="productModalOptions"></div>
+
+        <div class="details-quantity">
+          <strong>Quantidade</strong>
+          <div class="qty-control">
+            <button type="button" id="modalQtyMinus" aria-label="Diminuir"><i class="fas fa-minus"></i></button>
+            <span id="modalQtyValue">1</span>
+            <button type="button" id="modalQtyPlus" aria-label="Aumentar"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+
+        <div class="details-observations">
+          <label class="details-subtitle" for="productObservation">Observação do pedido</label>
+          <textarea id="productObservation" placeholder="Ex.: caprichar no molho, sem cebola..."></textarea>
+        </div>
+      </div>
+
+      <div class="footer-details-menu">
+        <div class="details-total">Total <strong id="productModalTotal">R$ 0,00</strong></div>
+        <button class="details-confirm-button" id="addToCartButton" type="button">Adicionar à sacola</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup checkout-popup" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <div class="popup-content">
+      <header class="checkout-header">
+        <button class="details-back" id="closeCheckout" type="button" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button>
+        <h1 id="checkoutTitle">Finalizar pedido</h1>
+      </header>
+
+      <div class="checkout-content">
+        <div id="checkoutFormView">
+          <section class="checkout-section">
+            <h2>Tipo de pedido</h2>
+            <div class="order-type" id="orderTypeGroup">
+              <label class="option-card selected">
+                <input type="radio" name="orderType" value="delivery" checked />
+                <i class="fas fa-motorcycle"></i>
+                <div><strong>Delivery</strong><span id="checkout-delivery-desc">50 a 60 min · taxa calculada no total</span></div>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="orderType" value="pickup" />
+                <i class="fas fa-store"></i>
+                <div><strong>Retirada</strong><span id="checkout-pickup-desc">Pronto em 30 min · sem taxa de entrega</span></div>
+              </label>
+            </div>
+          </section>
+
+          <section class="checkout-section">
+            <h2>Seus dados</h2>
+            <div class="form-row">
+              <input class="form-input" id="checkoutName" type="text" placeholder="Nome completo" />
+              <input class="form-input" id="checkoutPhone" type="tel" placeholder="Telefone / WhatsApp" />
+            </div>
+            <div class="form-row">
+              <input class="form-input" id="checkoutCpf" type="text" placeholder="CPF (opcional)" inputmode="numeric" />
+            </div>
+            <div class="form-row" id="addressBlock">
+              <div class="address-input-wrapper">
+                <input class="form-input" id="checkoutAddress" type="text" placeholder="Endereço completo" />
+                <button class="select-address-button" id="selectAddressBtn" type="button">
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="address-dropdown" id="addressDropdown"></div>
+              </div>
+            </div>
+            <div class="field-error" id="checkoutError"></div>
+          </section>
+
+          <section class="checkout-section">
+            <h2>Pagamento</h2>
+            <div class="payment-methods" id="paymentMethods">
+              <label class="option-card selected">
+                <input type="radio" name="paymentMethod" value="pix" checked />
+                <i class="fas fa-qrcode"></i>
+                <div><strong>Pix</strong><span>Confirmação instantânea no caixa</span></div>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="paymentMethod" value="card" />
+                <i class="fas fa-credit-card"></i>
+                <div><strong>Cartão</strong><span>Crédito ou débito na entrega</span></div>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="paymentMethod" value="cash" />
+                <i class="fas fa-money-bill-wave"></i>
+                <div><strong>Dinheiro</strong><span>Pague na entrega ou retirada</span></div>
+              </label>
+            </div>
+            <div class="form-row" id="changeSection" style="margin-top: 16px; display: none;">
+              <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <input type="checkbox" id="needsChange" />
+                <span>Precisa de troco?</span>
+              </label>
+              <input class="form-input" id="changeAmount" type="number" placeholder="Valor para troco (R$)" disabled />
+            </div>
+          </section>
+
+          <section class="checkout-section">
+            <h2>Resumo do pedido</h2>
+            <div class="order-items" id="checkoutItems"></div>
+            <div class="cart-summary">
+              <div class="summary-item"><span>Subtotal</span><strong id="checkoutSubtotal">R$ 0,00</strong></div>
+              <div class="summary-item delivery"><span>Taxa de entrega</span><strong id="checkoutDelivery">R$ 0,00</strong></div>
+              <div class="summary-item discount"><span>Desconto</span><strong id="checkoutDiscount">- R$ 0,00</strong></div>
+              <div class="summary-total"><span>Total</span><strong id="checkoutTotal">R$ 0,00</strong></div>
+            </div>
+          </section>
+
+          <div class="checkout-footer">
+            <button class="confirm-order-button" id="confirmOrder" type="button">Confirmar pedido</button>
+          </div>
+        </div>
+
+        <div id="checkoutSuccessView" class="order-success hidden">
+          <i class="fas fa-check"></i>
+          <h2>Pedido recebido!</h2>
+          <p>Obrigado pela compra. Seu pedido foi registrado e pode ser acompanhado pelo WhatsApp da loja.</p>
+          <span class="order-number" id="orderNumber">Pedido #0000</span>
+          <div style="margin-top:18px">
+            <button class="details-confirm-button" id="finishOrder" type="button">Voltar ao cardápio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE PEDIDOS -->
+  <div class="popup orders-popup hidden" id="ordersModal" role="dialog" aria-modal="true" aria-labelledby="ordersTitle">
+    <div class="popup-content">
+      <header class="checkout-header">
+        <button class="details-back" id="closeOrders" type="button" aria-label="Fechar"><i class="fas fa-times"></i></button>
+        <h1 id="ordersTitle">Meus Pedidos</h1>
+      </header>
+
+      <div class="orders-content" id="ordersContent">
+        <div id="ordersEmpty" class="orders-empty-state">
+          <i class="fas fa-receipt" style="font-size: 48px; color: #cbd5e1; margin-bottom: 16px;"></i>
+          <p style="color: #64748b;">Nenhum pedido encontrado</p>
+          <p style="color: #94a3b8; font-size: 14px;">Seus pedidos aparecerão aqui</p>
+        </div>
+        <div id="ordersList" class="orders-list hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETALHES DO PEDIDO -->
+  <div class="popup order-details-popup hidden" id="orderDetailsModal" role="dialog" aria-modal="true">
+    <div class="popup-content">
+      <header class="checkout-header">
+        <button class="details-back" id="closeOrderDetails" type="button" aria-label="Fechar"><i class="fas fa-times"></i></button>
+        <h1 id="orderDetailsTitle">Detalhes do Pedido</h1>
+      </header>
+
+      <div class="order-details-content">
+        <!-- Status Steps -->
+        <div class="order-status-steps" id="orderStatusSteps">
+          <div class="status-step" data-step="pending">
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2"></path>
+                <path d="M9 5v14"></path>
+                <path d="M9 12h6"></path>
+              </svg>
+            </div>
+            <div class="step-label">Pendente</div>
+          </div>
+          <div class="status-step" data-step="accepted">
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-10 10 10 10 0 1 1 10-10h-8"></path>
+                <path d="m9 11 3 3 8-8"></path>
+                <path d="m12 15 3 3 8-8"></path>
+              </svg>
+            </div>
+            <div class="step-label">Aceito</div>
+          </div>
+          <div class="status-step" data-step="in_transit">
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="16" height="16" x="4" y="2" rx="2"></rect>
+                <path d="M12 6v8"></path>
+                <path d="M8 10h8"></path>
+                <path d="M9 18h6"></path>
+              </svg>
+            </div>
+            <div class="step-label">A caminho</div>
+          </div>
+          <div class="status-step" data-step="finished">
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-10 10 10 10 0 1 1 10-10h-8"></path>
+                <path d="m22 4-12 8.36-12-8.36"></path>
+              </svg>
+            </div>
+            <div class="step-label">Finalizado</div>
+          </div>
+        </div>
+
+        <!-- Order Info -->
+        <div class="order-info-section">
+          <div class="order-info-row">
+            <span class="order-info-label">Número:</span>
+            <span class="order-info-value" id="orderDetailsNumber">#0000</span>
+          </div>
+          <div class="order-info-row">
+            <span class="order-info-label">Data:</span>
+            <span class="order-info-value" id="orderDetailsDate">--/--/----</span>
+          </div>
+          <div class="order-info-row">
+            <span class="order-info-label">Tipo:</span>
+            <span class="order-info-value" id="orderDetailsType">--</span>
+          </div>
+          <div class="order-info-row">
+            <span class="order-info-label">Pagamento:</span>
+            <span class="order-info-value" id="orderDetailsPayment">--</span>
+          </div>
+        </div>
+
+        <!-- Customer Info -->
+        <div class="order-customer-section">
+          <h3>Cliente</h3>
+          <div class="customer-info">
+            <div class="customer-info-row">
+              <span class="customer-info-label">Nome:</span>
+              <span class="customer-info-value" id="orderDetailsCustomerName">--</span>
+            </div>
+            <div class="customer-info-row">
+              <span class="customer-info-label">Telefone:</span>
+              <span class="customer-info-value" id="orderDetailsCustomerPhone">--</span>
+            </div>
+            <div class="customer-info-row" id="orderDetailsCpfRow">
+              <span class="customer-info-label">CPF:</span>
+              <span class="customer-info-value" id="orderDetailsCustomerCpf">--</span>
+            </div>
+            <div class="customer-info-row" id="orderDetailsAddressRow">
+              <span class="customer-info-label">Endereço:</span>
+              <span class="customer-info-value" id="orderDetailsAddress">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items -->
+        <div class="order-items-section">
+          <h3>Itens</h3>
+          <div class="order-items-list" id="orderDetailsItems"></div>
+        </div>
+
+        <!-- Totals -->
+        <div class="order-totals-section">
+          <div class="total-row">
+            <span>Subtotal</span>
+            <span id="orderDetailsSubtotal">R$ 0,00</span>
+          </div>
+          <div class="total-row" id="orderDetailsDeliveryRow">
+            <span>Taxa de entrega</span>
+            <span id="orderDetailsDelivery">R$ 0,00</span>
+          </div>
+          <div class="total-row discount" id="orderDetailsDiscountRow">
+            <span>Desconto</span>
+            <span id="orderDetailsDiscount">- R$ 0,00</span>
+          </div>
+          <div class="total-row total">
+            <span>Total</span>
+            <span id="orderDetailsTotal">R$ 0,00</span>
+          </div>
+        </div>
+
+        <!-- Change Info -->
+        <div class="order-change-section" id="orderDetailsChangeSection">
+          <div class="change-info">
+            <span>Precisa de troco?</span>
+            <span id="orderDetailsNeedsChange">Não</span>
+          </div>
+          <div class="change-amount" id="orderDetailsChangeAmountRow">
+            <span>Troco para:</span>
+            <span id="orderDetailsChangeAmount">R$ 0,00</span>
+          </div>
+        </div>
+
+        <!-- Observation -->
+        <div class="order-observation-section" id="orderDetailsObservationSection">
+          <h3>Observações</h3>
+          <p id="orderDetailsObservation">--</p>
+        </div>
+
+        <!-- Rating Section (apenas quando finalizado e não avaliado) -->
+        <div class="order-rating-section" id="orderDetailsRatingSection" style="display: none;">
+          <h3>Avaliar pedido</h3>
+          <p style="color: #64748b; font-size: 14px; margin-bottom: 16px;">Como foi seu pedido? Avalie de 1 a 5 estrelas:</p>
+          <div class="rating-stars" id="orderDetailsRatingStars">
+            <button class="star" data-rating="1">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+              </svg>
+            </button>
+            <button class="star" data-rating="2">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+              </svg>
+            </button>
+            <button class="star" data-rating="3">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+              </svg>
+            </button>
+            <button class="star" data-rating="4">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+              </svg>
+            </button>
+            <button class="star" data-rating="5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+              </svg>
+            </button>
+          </div>
+          <textarea id="orderDetailsRatingComment" placeholder="Deixe um comentário (opcional)" style="width: 100%; margin-top: 16px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; resize: vertical; min-height: 80px; font-family: inherit; font-size: 14px;"></textarea>
+          <button class="confirm-order-button" id="submitOrderRating" type="button" style="margin-top: 16px; width: 100%;">Enviar avaliação</button>
+        </div>
+
+        <!-- Rating Display (apenas quando já avaliado) -->
+        <div class="order-rating-display" id="orderDetailsRatingDisplay" style="display: none;">
+          <h3>Sua avaliação</h3>
+          <div class="rating-display-stars" id="orderDetailsRatingDisplayStars"></div>
+          <p id="orderDetailsRatingDisplayComment" style="color: #64748b; font-size: 14px; margin-top: 8px;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVALIAÇÃO DO PEDIDO -->
+        <div id="ratingModal" class="popup rating-popup hidden" role="dialog" aria-modal="true">
+          <div class="popup-content">
+            <header class="checkout-header">
+              <button class="details-back" id="closeRating" type="button" aria-label="Fechar"><i class="fas fa-times"></i></button>
+              <h1>Avaliar pedido</h1>
+            </header>
+            <div class="rating-content">
+              <p style="text-align: center; margin-bottom: 20px; font-size: 16px; color: #64748b;">Como foi seu pedido? Avalie de 1 a 5 estrelas:</p>
+              <div class="rating-stars" id="ratingStars">
+                <button class="star" data-rating="1">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+                  </svg>
+                </button>
+                <button class="star" data-rating="2">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+                  </svg>
+                </button>
+                <button class="star" data-rating="3">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+                  </svg>
+                </button>
+                <button class="star" data-rating="4">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+                  </svg>
+                </button>
+                <button class="star" data-rating="5">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.81L5 9.27l-3.09-6.26L12 2z"/>
+                  </svg>
+                </button>
+              </div>
+              <textarea id="ratingComment" placeholder="Deixe um comentário (opcional)" style="width: 100%; margin-top: 16px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; resize: vertical; min-height: 80px; font-family: inherit; font-size: 14px;"></textarea>
+              <button class="confirm-order-button" id="submitRating" type="button" style="margin-top: 16px; width: 100%;">Enviar avaliação</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon"><i class="fas fa-check"></i></span>
+    <span>
+      <span class="toast-title" id="toastTitle">Pronto</span>
+      <span class="toast-text" id="toastText">Operação realizada.</span>
+    </span>
+    <span class="toast-progress-container"><span class="toast-progress" id="toastProgress"></span></span>
+  </div>
+
+  <script>
+    // Carregar dados da empresa via API
+    const companyId = window.location.pathname.split('/')[2];
+    const API_BASE = '/api';
+    
+    async function loadStoreData() {
+      try {
+        const response = await fetch(`${API_BASE}/site/${companyId}`);
+        const data = await response.json();
+        
+        window.STORE_DATA = data;
+        
+        // Aplicar configurações
+        applyStoreConfig(data.config);
+        
+        // Carregar app.js
+        const script = document.createElement('script');
+        script.src = 'app.js';
+        script.onload = () => {
+          // Carregar cliente do cache após app.js carregar
+          if (window.loadCustomerFromCache) {
+            window.loadCustomerFromCache();
+          }
+        };
+        document.body.appendChild(script);
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        document.body.innerHTML = '<div style="padding: 40px; text-align: center;"><h2>Erro ao carregar loja</h2><p>Tente novamente mais tarde.</p></div>';
+      }
+    }
+    
+    function applyStoreConfig(config) {
+      // Aplicar cores personalizadas
+      if (config.primaryColor) {
+        document.documentElement.style.setProperty('--primary-color', config.primaryColor);
+        document.documentElement.style.setProperty('--primary-color-rgb', hexToRgb(config.primaryColor));
+        document.documentElement.style.setProperty('--primary-color-hover', adjustColor(config.primaryColor, -20));
+      }
+      
+      // Atualizar textos e elementos
+      const store = config.store || {};
+      
+      if (store.name) {
+        document.getElementById('brand-name').textContent = store.name;
+        document.getElementById('store-name').textContent = store.name;
+        document.getElementById('banner-title').textContent = store.name;
+        document.getElementById('footer-name').textContent = store.name;
+        document.getElementById('footer-copyright').textContent = store.name;
+        document.getElementById('cart-store-name').textContent = store.name;
+        document.title = store.name;
+      }
+      
+      if (store.tagline) {
+        document.getElementById('brand-tag').textContent = store.tagline;
+      }
+      
+      if (store.description) {
+        document.getElementById('banner-subtitle').textContent = store.description;
+        document.getElementById('store-description').textContent = store.description;
+        document.getElementById('footer-slogan').textContent = store.description;
+      }
+      
+      if (store.logo) {
+        document.getElementById('header-logo').src = store.logo;
+        document.getElementById('store-logo').src = store.logo;
+        document.getElementById('footer-logo').src = store.logo;
+      }
+      
+      if (store.deliveryTime) {
+        document.getElementById('delivery-time').textContent = `Delivery ${store.deliveryTime}`;
+        document.getElementById('meta-delivery-time').textContent = store.deliveryTime;
+        document.getElementById('footer-delivery-time').textContent = `Delivery: ${store.deliveryTime}`;
+        document.getElementById('checkout-delivery-desc').textContent = `${store.deliveryTime} · taxa calculada no total`;
+      }
+      
+      if (store.pickupTime) {
+        document.getElementById('pickup-time').textContent = `Retirada ${store.pickupTime}`;
+        document.getElementById('meta-pickup-time').textContent = `Retirada ${store.pickupTime}`;
+        document.getElementById('footer-pickup-time').textContent = `Retirada: ${store.pickupTime}`;
+        document.getElementById('checkout-pickup-desc').textContent = `Pronto em ${store.pickupTime} · sem taxa de entrega`;
+      }
+      
+      if (store.deliveryFeeMin && store.deliveryFeeMax) {
+        const fee = `R$ ${store.deliveryFeeMin},00 - R$ ${store.deliveryFeeMax},00`;
+        document.getElementById('meta-delivery-fee').textContent = fee;
+      }
+      
+      if (store.minimumOrder) {
+        const minOrder = `Pedido mínimo R$ ${store.minimumOrder},00`;
+        document.getElementById('min-order').textContent = minOrder;
+        document.getElementById('footer-min-order').textContent = minOrder;
+      }
+      
+      if (store.whatsapp) {
+        document.getElementById('meta-whatsapp').textContent = store.whatsapp;
+        document.getElementById('footer-whatsapp').textContent = store.whatsapp;
+      }
+      
+      if (store.email) {
+        document.getElementById('footer-email').textContent = store.email;
+      }
+      
+      if (store.phone) {
+        document.getElementById('footer-phone').textContent = store.phone;
+      }
+      
+      document.getElementById('year').textContent = new Date().getFullYear();
+    }
+    
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? 
+        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
+        '255, 128, 0';
+    }
+    
+    function adjustColor(hex, amount) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+      return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
+    }
+    
+    // Iniciar carregamento
+    loadStoreData();
+  </script>
+
+  <!-- MODAL DE LOGIN DO CLIENTE -->
+  <div class="popup customer-login-popup hidden" id="customerLoginModal" role="dialog" aria-modal="true">
+    <div class="popup-content customer-login-content">
+      <!-- ETAPA 1: WHATSAPP -->
+      <div class="login-step" id="loginStep1">
+        <header class="customer-login-header">
+          <button class="login-back" id="closeLogin" type="button" aria-label="Fechar"><i class="fas fa-times"></i></button>
+          <h1>Identifique-se</h1>
+        </header>
+
+        <div class="customer-login-body">
+          <div class="customer-login-form">
+            <label class="customer-login-label">Seu número de WhatsApp é:</label>
+            <div class="customer-login-input-wrapper">
+              <input type="tel" id="customerPhone" class="customer-login-input" placeholder="(91) 99187-3356" maxlength="15" />
+            </div>
+
+            <button class="customer-login-button" id="loginStep1Next" type="button">Avançar</button>
+          </div>
+
+          <p class="customer-login-disclaimer">
+            Para fazer o pedido precisamos dos seus dados. Este é um ambiente protegido.
+          </p>
+        </div>
+      </div>
+
+      <!-- ETAPA 2: NOME -->
+      <div class="login-step hidden" id="loginStep2">
+        <header class="customer-login-header">
+          <button class="login-back" id="loginStep2Back" type="button" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button>
+          <h1>Identifique-se</h1>
+        </header>
+
+        <div class="customer-login-body">
+          <div class="customer-login-form">
+            <label class="customer-login-label">Seu número de WhatsApp é:</label>
+            <div class="customer-login-input-wrapper">
+              <input type="tel" id="customerPhoneDisplay" class="customer-login-input disabled" disabled />
+            </div>
+
+            <label class="customer-login-label" style="margin-top: 20px;">Seu nome e sobrenome:</label>
+            <div class="customer-login-input-wrapper">
+              <input type="text" id="customerName" class="customer-login-input" placeholder="Nome e sobrenome" />
+            </div>
+
+            <button class="customer-login-button" id="loginStep2Next" type="button">Avançar</button>
+          </div>
+
+          <p class="customer-login-disclaimer">
+            Para fazer o pedido precisamos dos seus dados. Este é um ambiente protegido.
+          </p>
+        </div>
+      </div>
+
+      <!-- ETAPA 3: PERFIL (MINHA CONTA) -->
+      <div class="login-step hidden" id="loginStep3">
+        <header class="customer-login-header profile-header">
+          <h1>Minha conta</h1>
+          <button class="login-close" id="closeProfile" type="button" aria-label="Fechar"><i class="fas fa-times"></i></button>
+        </header>
+
+        <div class="customer-login-body profile-body">
+          <div class="profile-info">
+            <div class="profile-avatar">
+              <span id="profileAvatar">M</span>
+            </div>
+            <div class="profile-details">
+              <h2 id="profileName">mileni</h2>
+              <p id="profilePhone">+55 (91) 9 9288-0871</p>
+            </div>
+          </div>
+
+          <div class="profile-cashback">
+            <div class="cashback-label">Cashback disponível</div>
+            <div class="cashback-value" id="profileCashback">R$ 0,00</div>
+          </div>
+
+          <nav class="profile-nav">
+            <button class="profile-nav-item active" data-tab="orders">
+              <i class="fas fa-receipt"></i>
+              <span>Pedidos</span>
+            </button>
+            <button class="profile-nav-item" data-tab="addresses">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Endereços</span>
+            </button>
+            <button class="profile-nav-item" data-tab="benefits">
+              <i class="fas fa-gift"></i>
+              <span>Benefícios</span>
+            </button>
+            <button class="profile-nav-item" data-tab="data">
+              <i class="fas fa-user"></i>
+              <span>Meus dados</span>
+            </button>
+          </nav>
+
+          <div class="profile-content">
+            <!-- TAB: PEDIDOS -->
+            <div class="profile-tab active" id="tab-orders">
+              <div id="profileOrdersList" class="profile-orders-list"></div>
+              <div class="empty-state" id="profileOrdersEmpty">
+                <i class="fas fa-receipt"></i>
+                <p>Nenhum pedido ainda.</p>
+                <p>Quando você fizer o primeiro, ele aparece aqui.</p>
+              </div>
+            </div>
+
+            <!-- TAB: ENDEREÇOS -->
+            <div class="profile-tab hidden" id="tab-addresses">
+              <div id="addressesList" class="addresses-list"></div>
+              <button class="add-address-button" id="addAddressBtn">
+                <i class="fas fa-plus"></i>
+                <span>Adicionar endereço</span>
+              </button>
+            </div>
+
+            <!-- TAB: BENEFÍCIOS -->
+            <div class="profile-tab hidden" id="tab-benefits">
+              <div id="benefitsList" class="benefits-list"></div>
+              <div class="empty-state" id="benefitsEmpty">
+                <i class="fas fa-gift"></i>
+                <p>Nenhum benefício disponível.</p>
+              </div>
+            </div>
+
+            <!-- TAB: MEUS DADOS -->
+            <div class="profile-tab hidden" id="tab-data">
+              <div class="profile-form">
+                <label>Nome completo</label>
+                <input type="text" id="editName" class="customer-login-input" />
+
+                <label>E-mail</label>
+                <input type="email" id="editEmail" class="customer-login-input" />
+
+                <label>Telefone</label>
+                <input type="tel" id="editPhone" class="customer-login-input" disabled />
+
+                <label>CPF</label>
+                <input type="text" id="editCpf" class="customer-login-input" />
+
+                <label>Data de nascimento</label>
+                <input type="date" id="editBirthdate" class="customer-login-input" />
+
+                <button class="customer-login-button" id="saveProfileData">Salvar alterações</button>
+                <button class="logout-button" id="logoutButton">Sair da conta</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE ADICIONAR ENDEREÇO -->
+  <div class="popup address-modal hidden" id="addressModal" role="dialog" aria-modal="true">
+    <div class="popup-content address-modal-content">
+      <header class="address-modal-header">
+        <h1>Adicionar endereço</h1>
+        <button class="address-modal-close" id="closeAddressModal" type="button" aria-label="Fechar"><i class="fas fa-times"></i></button>
+      </header>
+
+      <div class="address-modal-body">
+        <form class="address-form" id="addressForm">
+          <div class="address-form-group">
+            <label class="address-form-label">Apelido</label>
+            <input type="text" id="addressNickname" class="address-form-input" placeholder="Ex: Casa, Trabalho" maxlength="30" />
+          </div>
+
+          <div class="address-form-row">
+            <div class="address-form-group address-form-group-cep">
+              <label class="address-form-label">CEP</label>
+              <input type="text" id="addressCep" class="address-form-input" placeholder="00000-000" maxlength="9" />
+            </div>
+            <div class="address-form-group address-form-group-number">
+              <label class="address-form-label">Número</label>
+              <input type="text" id="addressNumber" class="address-form-input" placeholder="123" maxlength="10" />
+            </div>
+          </div>
+
+          <div class="address-form-group">
+            <label class="address-form-label">Rua</label>
+            <input type="text" id="addressStreet" class="address-form-input" placeholder="Nome da rua" />
+          </div>
+
+          <div class="address-form-group">
+            <label class="address-form-label">Bairro</label>
+            <input type="text" id="addressNeighborhood" class="address-form-input" placeholder="Nome do bairro" />
+          </div>
+
+          <div class="address-form-group">
+            <label class="address-form-label">Complemento (opcional)</label>
+            <input type="text" id="addressComplement" class="address-form-input" placeholder="Ex: Apto 101, Bloco B" maxlength="100" />
+          </div>
+
+          <div class="address-form-actions">
+            <button type="button" class="address-form-button address-form-button-cancel" id="cancelAddressBtn">Cancelar</button>
+            <button type="submit" class="address-form-button address-form-button-save">Salvar endereço</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

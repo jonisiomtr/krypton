@@ -1,0 +1,18 @@
+.gallery-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+  width: fit-content;
+}
+
+.gallery-btn:hover {
+  transform: scale(1.03);
+  opacity: 0.9;
+}

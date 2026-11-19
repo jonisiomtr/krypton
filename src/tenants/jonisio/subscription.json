@@ -1,0 +1,25 @@
+{
+  "tenantId": "jonisio",
+  "planId": "base",
+  "planName": "Base (Teste Grátis - 2 dias)",
+  "price": 0,
+  "modules": [
+    "assistant",
+    "catalog",
+    "website",
+    "delivery",
+    "pdv_caixa",
+    "qrcode",
+    "scheduling",
+    "webagendamento",
+    "pix"
+  ],
+  "moduleExpirations": {},
+  "status": "trial",
+  "startDate": "2026-11-16T21:21:05.498Z",
+  "endDate": null,
+  "trialEndsAt": "2026-11-18T21:21:05.463Z",
+  "createdAt": "2026-11-16T21:21:05.498Z",
+  "updatedByAdmin": true,
+  "updatedAt": "2026-11-18T20:55:56.496Z"
+}

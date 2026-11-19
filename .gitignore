@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sessions
+sessions/
+sessionsData/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Tenant data
+src/tenants/*/database.json
+src/tenants/*/localdata/*.json
+src/tenants/*/products.json
+src/tenants/*/orders.json
+src/tenants/*/services.json
+src/tenants/*/customers.json
+src/tenants/*/config.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+_nul
+
+# Build
+dist/
+build/
+.cache/
+
+# Devin
+.devin/

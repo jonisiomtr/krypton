@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #e0a96d;
+      --primary-color-dark: #c59257;
+      --background-color: #121212;
+      --card-background: #1a1a1a;
+      --text-color: #e0a96d;
+      --text-color-secondary: #a0a0a0;
+      --border-color: #c59257;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--background-color);
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/></svg>');
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .booking-container {
+      background: #1a1a1a;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 20px rgba(197, 146, 87, 0.3);
+      max-width: 700px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .booking-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+      padding: 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .my-appointments-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .my-appointments-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .booking-header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 38px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .booking-header p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      opacity: 0.95;
+      font-weight: 300;
+    }
+
+    .company-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      margin: 0 auto 15px;
+      display: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .company-logo.show {
+      display: block;
+    }
+
+    .booking-content {
+      padding: 30px;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      border: 2px solid var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary-color-dark);
+      transition: all 0.3s ease;
+    }
+
+    .step-number.active {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+      color: white;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(224, 169, 109, 0.5);
+    }
+
+    .step-number.completed {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+
+    .step-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .service-card,
+    .professional-card,
+    .time-slot {
+      background: #2a2a2a;
+      border: 2px solid #3a3a3a;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover,
+    .professional-card:hover,
+    .time-slot:hover {
+      border-color: var(--primary-color);
+      background: #333;
+    }
+
+    .service-card.selected,
+    .professional-card.selected,
+    .time-slot.selected {
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, rgba(224, 169, 109, 0.1) 0%, rgba(197, 146, 87, 0.1) 100%);
+      box-shadow: 0 0 20px rgba(224, 169, 109, 0.3);
+    }
+
+    .service-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .service-card.large {
+      grid-column: 1 / -1;
+    }
+
+    .service-card.small {
+      grid-column: span 1;
+    }
+
+    @media (min-width: 600px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .service-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .service-avatar-placeholder {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .service-info {
+      flex: 1;
+    }
+
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #e0a96d;
+      margin-bottom: 4px;
+    }
+
+    .service-card p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      color: #a0a0a0;
+    }
+
+    .service-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: linear-gradient(135deg, #e0a96d 0%, #c59257 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .service-card h3,
+    .professional-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .professional-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .professional-avatar-placeholder {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .professional-info {
+      flex: 1;
+    }
+
+    .professional-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 4px;
+    }
+
+    .service-card p,
+    .professional-card p {
+      font-size: 14px;
+      color: var(--text-color-secondary);
+    }
+
+    .service-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .time-slot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .time-slot span {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e0a96d;
+    }
+
+    .time-slot.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .calendar-container {
+      margin-bottom: 20px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .calendar-header button {
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .calendar-header button:hover {
+      background: #333;
+      border-color: var(--primary-color);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #2a2a2a;
+      color: #a0a0a0;
+    }
+
+    .calendar-day:hover:not(.disabled) {
+      background: #333;
+      color: #e0a96d;
+    }
+
+    .calendar-day.selected {
+      background: linear-gradient(135deg, #e0a96d 0%, #c59257 100%);
+      color: white;
+    }
+
+    .calendar-day.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .calendar-day.today {
+      border: 2px solid #e0a96d;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #e0a96d;
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #3a3a3a;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background: #2a2a2a;
+      color: white;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #e0a96d;
+    }
+
+    .navigation-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(224, 169, 109, 0.4);
+    }
+
+    .btn-secondary {
+      background: #2a2a2a;
+      color: var(--text-color-secondary);
+      border: 2px solid #3a3a3a;
+    }
+
+    .btn-secondary:hover {
+      background: #333;
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #3a3a3a;
+      border-top-color: #e0a96d;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error {
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid #dc2626;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #dc2626;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid #10b981;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .success h3 {
+      color: #10b981;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .success p {
+      color: #10b981;
+      font-size: 14px;
+    }
+
+    .summary {
+      background: #2a2a2a;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #3a3a3a;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: #a0a0a0;
+      font-size: 14px;
+    }
+
+    .summary-value {
+      color: #e0a96d;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .appointment-card {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .appointment-card:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 25px rgba(224, 169, 109, 0.2);
+    }
+
+    .appointment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #3a3a3a;
+    }
+
+    .appointment-status {
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cancel-appointment-btn {
+      background: rgba(239, 68, 68, 0.15);
+      border: 2px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .cancel-appointment-btn:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: #ef4444;
+      transform: translateY(-2px);
+    }
+
+    .delete-history-btn {
+      background: rgba(239, 68, 68, 0.1);
+      border: 2px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .delete-history-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      transform: scale(1.1);
+    }
+
+    .appointment-body h4 {
+      color: var(--primary-color);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .appointment-body p {
+      color: #e0e0e0;
+      font-size: 15px;
+      margin: 8px 0;
+      font-weight: 500;
+    }
+
+    .appointment-warning {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: #fbbf24;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    .appointment-success {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #10b981;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    .appointment-error {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .booking-container {
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      body {
+        padding: 0;
+      }
+
+      .booking-header {
+        padding: 20px;
+      }
+
+      .booking-content {
+        padding: 20px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .service-card.large,
+      .service-card.small {
+        grid-column: 1 / -1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="booking-container">
+    <div class="booking-header">
+      <button class="my-appointments-btn" onclick="showMyAppointments()">
+        📋 Meus Agendamentos
+      </button>
+      <img id="companyLogo" class="company-logo" alt="Logo da empresa">
+      <h1 id="businessName">Carregando...</h1>
+      <p id="businessSubtitle">Agendamento Online</p>
+    </div>
+
+    <div class="booking-content">
+      <div class="step-indicator">
+        <div class="step-number active" data-step="1">1</div>
+        <div class="step-number" data-step="2">2</div>
+        <div class="step-number" data-step="3">3</div>
+        <div class="step-number" data-step="4">4</div>
+      </div>
+
+      <div id="bookingContent">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>Carregando...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuração
+    const API_BASE = window.location.origin;
+    const COMPANY_ID = window.location.pathname.split('/').pop();
+
+    // Estado
+    let currentStep = 1;
+    let selectedService = null;
+    let selectedProfessional = null;
+    let selectedDate = null;
+    let selectedTime = null;
+    let customerData = {};
+    let selectedCategory = null;
+
+    // Dados
+    let config = null;
+    let services = [];
+    let professionals = [];
+    let currentDate = new Date();
+
+    // Inicialização
+    async function init() {
+      try {
+        await loadConfig();
+        await loadServices();
+        await loadProfessionals();
+        renderStep(1);
+      } catch (error) {
+        console.error('Erro ao inicializar:', error);
+        showError('Erro ao carregar dados. Tente novamente mais tarde.');
+      }
+    }
+
+    async function loadConfig() {
+      const response = await fetch(`${API_BASE}/api/webagendamento/${COMPANY_ID}`);
+      config = await response.json();
+
+      document.getElementById('businessName').textContent = config.hero.title || 'Agendamento Online';
+      document.getElementById('businessSubtitle').textContent = config.hero.subtitle || 'Agende seu horário';
+
+      // Mostrar logo da empresa se existir
+      const logoElement = document.getElementById('companyLogo');
+      if (config.hero.imageUrl) {
+        logoElement.src = config.hero.imageUrl;
+        logoElement.classList.add('show');
+      } else {
+        logoElement.classList.remove('show');
+      }
+
+      // Aplicar cores configuráveis
+      if (config.colors) {
+        const root = document.documentElement;
+        if (config.colors.primary) root.style.setProperty('--primary-color', config.colors.primary);
+        if (config.colors.secondary) root.style.setProperty('--primary-color-dark', config.colors.secondary);
+        if (config.colors.background) root.style.setProperty('--background-color', config.colors.background);
+        if (config.colors.text) root.style.setProperty('--text-color', config.colors.text);
+        if (config.colors.accent) root.style.setProperty('--border-color', config.colors.accent);
+      }
+    }
+
+    async function loadServices() {
+      const response = await fetch(`${API_BASE}/api/webagendamento/${COMPANY_ID}/services`);
+      services = await response.json();
+    }
+
+    async function loadProfessionals() {
+      const response = await fetch(`${API_BASE}/api/webagendamento/${COMPANY_ID}/professionals`);
+      professionals = await response.json();
+    }
+
+    function updateStepIndicator() {
+      document.querySelectorAll('.step-number').forEach((dot, index) => {
+        dot.classList.remove('active', 'completed');
+        if (index + 1 < currentStep) {
+          dot.classList.add('completed');
+        } else if (index + 1 === currentStep) {
+          dot.classList.add('active');
+        }
+      });
+    }
+
+    function renderStep(step) {
+      currentStep = step;
+      updateStepIndicator();
+
+      const content = document.getElementById('bookingContent');
+
+      switch (step) {
+        case 1:
+          renderServiceSelection(content);
+          break;
+        case 2:
+          renderProfessionalSelection(content);
+          break;
+        case 3:
+          renderDateTimeSelection(content);
+          break;
+        case 4:
+          renderCustomerForm(content);
+          break;
+        case 5:
+          renderConfirmation(content);
+          break;
+      }
+    }
+
+    function renderServiceSelection(container) {
+      let html = '<h2 class="step-title">Escolha o Serviço</h2>';
+
+      // Extrair categorias únicas e ordenar alfabeticamente
+      const categories = [...new Set(services.map(s => s.category || 'Todos'))].sort();
+      
+      // Adicionar filtros de categoria se houver mais de uma categoria
+      if (categories.length > 1) {
+        html += '<div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 8px;">';
+        html += `
+          <button onclick="filterServices('Tudo')"
+                  style="padding: 8px 16px; border-radius: 20px; border: 1px solid var(--primary-color);
+                         background: ${selectedCategory === null ? 'linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%)' : '#2a2a2a'};
+                         color: ${selectedCategory === null ? 'white' : 'var(--primary-color)'};
+                         cursor: pointer; white-space: nowrap; font-family: -apple-system, sans-serif; font-size: 14px;">
+            Tudo
+          </button>
+        `;
+        categories.forEach(category => {
+          if (category !== 'Tudo') {
+            html += `
+              <button onclick="filterServices('${category}')"
+                      style="padding: 8px 16px; border-radius: 20px; border: 1px solid var(--primary-color);
+                             background: ${selectedCategory === category ? 'linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%)' : '#2a2a2a'};
+                             color: ${selectedCategory === category ? 'white' : 'var(--primary-color)'};
+                             cursor: pointer; white-space: nowrap; font-family: -apple-system, sans-serif; font-size: 14px;">
+                ${category}
+              </button>
+            `;
+          }
+        });
+        html += '</div>';
+      }
+
+      const filteredServices = selectedCategory 
+        ? services.filter(s => (s.category || 'Todos') === selectedCategory)
+        : services;
+
+      if (filteredServices.length === 0) {
+        html += '<p style="text-align: center; color: #a0a0a0;">Nenhum serviço disponível nesta categoria.</p>';
+      } else {
+        html += '<div class="services-grid">';
+        
+        filteredServices.forEach(service => {
+          const isSmall = service.isBundle || service.isExpress || service.type === 'bundle';
+          const cardClass = isSmall ? 'service-card small' : 'service-card large';
+
+          // Mostrar imagem se tiver, senão mostrar placeholder com primeira letra
+          const avatarHtml = service.imageUrl
+            ? `<img src="${service.imageUrl}" alt="${service.name}" class="service-avatar">`
+            : `<div class="service-avatar-placeholder">${service.name.charAt(0).toUpperCase()}</div>`;
+
+          const badgeHtml = service.badgeText || service.isFeatured
+            ? `<span class="service-badge">${service.badgeText || 'Mais Procurado'}</span>`
+            : '';
+
+          const priceDisplay = config.features.showPrices && service.price && service.price > 0
+            ? `R$ ${parseFloat(service.price).toFixed(2)}`
+            : service.price === 0 ? 'Grátis' : 'A combinar';
+
+          html += `
+            <div class="${cardClass} ${selectedService?.id === service.id ? 'selected' : ''}"
+                 onclick="selectService(${service.id})"
+                 style="position: relative;">
+              ${badgeHtml}
+              ${avatarHtml}
+              <div class="service-info">
+                <h3>${service.name}</h3>
+                <p>${service.duration || 60} min</p>
+                ${service.description ? `<p style="font-size: 12px; color: #808080; margin-top: 4px;">${service.description}</p>` : ''}
+              </div>
+              ${config.features.showPrices ? `<p class="service-price">${priceDisplay}</p>` : ''}
+            </div>
+          `;
+        });
+        
+        html += '</div>';
+      }
+
+      html += `
+        <div class="navigation-buttons">
+          <button class="btn btn-secondary" onclick="window.close()">Fechar</button>
+          <button class="btn btn-primary" onclick="nextStep()" ${!selectedService ? 'disabled' : ''}>Continuar</button>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function selectService(serviceId) {
+      selectedService = services.find(s => s.id === serviceId);
+      renderStep(1);
+    }
+
+    function filterServices(category) {
+      selectedCategory = category === 'Tudo' ? null : category;
+      renderStep(1);
+    }
+
+    function renderProfessionalSelection(container) {
+      let html = '<h2 class="step-title">Escolha o Profissional</h2>';
+
+      if (!config.features.showProfessionals || professionals.length === 0) {
+        html += '<p style="text-align: center; color: #64748b; margin-bottom: 20px;">Qualquer profissional disponível</p>';
+        selectedProfessional = null;
+      } else {
+        html += `
+          <div class="professional-card ${!selectedProfessional ? 'selected' : ''}" onclick="selectProfessional(null)">
+            <h3>Qualquer Profissional</h3>
+            <p>Selecionado automaticamente</p>
+          </div>
+        `;
+
+        professionals.forEach(professional => {
+          // Mostrar foto se tiver, senão mostrar placeholder com primeira letra
+          const avatarHtml = professional.photo
+            ? `<img src="${professional.photo}" alt="${professional.name}" class="professional-avatar">`
+            : `<div class="professional-avatar-placeholder">${professional.name.charAt(0).toUpperCase()}</div>`;
+
+          html += `
+            <div class="professional-card ${selectedProfessional?.id === professional.id ? 'selected' : ''}" onclick="selectProfessional(${professional.id})">
+              ${avatarHtml}
+              <div class="professional-info">
+                <h3>${professional.name}</h3>
+                ${professional.phone ? `<p>Whatsapp: ${professional.phone}</p>` : ''}
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      html += `
+        <div class="navigation-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">Voltar</button>
+          <button class="btn btn-primary" onclick="nextStep()">Continuar</button>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function selectProfessional(professionalId) {
+      selectedProfessional = professionalId ? professionals.find(p => p.id === professionalId) : null;
+      renderStep(2);
+    }
+
+    function renderDateTimeSelection(container) {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const startDay = firstDay.getDay();
+      const daysInMonth = lastDay.getDate();
+
+      const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+      let html = '<h2 class="step-title">Escolha Data e Horário</h2>';
+
+      // Calendário
+      html += '<div class="calendar-container">';
+      html += `
+        <div class="calendar-header">
+          <button onclick="changeMonth(-1)">←</button>
+          <span style="font-weight: 600; color: var(--primary-color);">${monthNames[month]} ${year}</span>
+          <button onclick="changeMonth(1)">→</button>
+        </div>
+      `;
+
+      html += '<div class="calendar-grid">';
+      html += '<div style="font-size: 12px; color: #a0a0a0; text-align: center;">D</div>';
+      html += '<div style="font-size: 12px; color: #a0a0a0; text-align: center;">S</div>';
+      html += '<div style="font-size: 12px; color: #a0a0a0; text-align: center;">T</div>';
+      html += '<div style="font-size: 12px; color: #a0a0a0; text-align: center;">Q</div>';
+      html += '<div style="font-size: 12px; color: #a0a0a0; text-align: center;">Q</div>';
+      html += '<div style="font-size: 12px; color: #a0a0a0; text-align: center;">S</div>';
+      html += '<div style="font-size: 12px; color: #a0a0a0; text-align: center;">S</div>';
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (let i = 0; i < startDay; i++) {
+        html += '<div></div>';
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const dateStr = formatDate(date);
+        const isPast = date < today;
+        const isToday = date.toDateString() === today.toDateString();
+        const isSelected = selectedDate === dateStr;
+
+        // Verificar se o dia da semana está habilitado
+        const dayOfWeek = date.getDay();
+        const businessHours = config?.businessHours?.hours?.[dayOfWeek];
+        const isDayEnabled = businessHours && businessHours.enabled;
+
+        let classes = 'calendar-day';
+        if (isPast || !isDayEnabled) classes += ' disabled';
+        if (isToday) classes += ' today';
+        if (isSelected) classes += ' selected';
+
+        html += `<div class="${classes}" ${!isPast && isDayEnabled ? `onclick="selectDate('${dateStr}')"` : ''}>${day}</div>`;
+      }
+
+      html += '</div></div>';
+
+      // Horários (se data selecionada)
+      if (selectedDate) {
+        html += '<div id="timeSlots" style="margin-top: 20px;"><div class="loading"><div class="loading-spinner"></div></div></div>';
+      }
+
+      html += `
+        <div class="navigation-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">Voltar</button>
+          <button class="btn btn-primary" onclick="nextStep()" ${!selectedTime ? 'disabled' : ''}>Continuar</button>
+        </div>
+      `;
+
+      container.innerHTML = html;
+
+      if (selectedDate) {
+        loadTimeSlots();
+      }
+    }
+
+    function changeMonth(delta) {
+      currentDate.setMonth(currentDate.getMonth() + delta);
+      renderStep(3);
+    }
+
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function selectDate(dateStr) {
+      selectedDate = dateStr;
+      selectedTime = null;
+      renderStep(3);
+    }
+
+    async function loadTimeSlots() {
+      const container = document.getElementById('timeSlots');
+
+      try {
+        const params = new URLSearchParams({
+          date: selectedDate,
+          serviceId: selectedService.id
+        });
+
+        if (selectedProfessional) {
+          params.append('professionalId', selectedProfessional.id);
+        }
+
+        const response = await fetch(`${API_BASE}/api/webagendamento/${COMPANY_ID}/availability?${params}`);
+        const data = await response.json();
+
+        if (!data.available || data.slots.length === 0) {
+          container.innerHTML = '<p style="text-align: center; color: #64748b;">Nenhum horário disponível para esta data.</p>';
+          return;
+        }
+
+        let html = '<h3 style="font-size: 16px; font-weight: 600; color: #e0a96d; margin-bottom: 12px;">Horários Disponíveis</h3>';
+
+        data.slots.forEach(slot => {
+          html += `
+            <div class="time-slot ${selectedTime === slot.time ? 'selected' : ''} ${!slot.available ? 'disabled' : ''}"
+                 ${slot.available ? `onclick="selectTime('${slot.time}')"` : ''}>
+              <span>${slot.time}</span>
+              ${!slot.available ? '<span style="color: #ef4444; font-size: 12px;">Ocupado</span>' : ''}
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      } catch (error) {
+        console.error('Erro ao carregar horários:', error);
+        container.innerHTML = '<p style="text-align: center; color: #ef4444;">Erro ao carregar horários.</p>';
+      }
+    }
+
+    function selectTime(time) {
+      selectedTime = time;
+      renderStep(3);
+    }
+
+    function renderCustomerForm(container) {
+      let html = '<h2 class="step-title">Seus Dados</h2>';
+
+      html += `
+        <div class="form-group">
+          <label>Nome Completo *</label>
+          <input type="text" id="customerName" placeholder="Seu nome" value="${customerData.name || ''}">
+        </div>
+        <div class="form-group">
+          <label>Telefone (WhatsApp) *</label>
+          <input type="tel" id="customerPhone" placeholder="(91) 99187-3356" value="${customerData.phone || ''}">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="customerEmail" placeholder="seu@email.com" value="${customerData.email || ''}">
+        </div>
+      `;
+
+      html += `
+        <div class="navigation-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">Voltar</button>
+          <button class="btn btn-primary" onclick="nextStep()">Continuar</button>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function renderConfirmation(container) {
+      const name = document.getElementById('customerName')?.value || customerData.name;
+      const phone = document.getElementById('customerPhone')?.value || customerData.phone;
+      const email = document.getElementById('customerEmail')?.value || customerData.email;
+
+      customerData = { name, phone, email, whatsapp: phone };
+
+      let html = '<h2 class="step-title">Confirmação</h2>';
+
+      html += '<div class="summary">';
+
+      // Mostrar imagem do serviço se tiver
+      if (selectedService.imageUrl) {
+        html += `
+          <div style="text-align: center; margin-bottom: 20px;">
+            <img src="${selectedService.imageUrl}" alt="${selectedService.name}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color);">
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="summary-item">
+          <span class="summary-label">Serviço:</span>
+          <span class="summary-value">${selectedService.name}</span>
+        </div>
+      `;
+
+      if (selectedProfessional) {
+        // Mostrar foto do profissional se tiver
+        if (selectedProfessional.photo) {
+          html += `
+            <div style="text-align: center; margin-bottom: 20px;">
+              <img src="${selectedProfessional.photo}" alt="${selectedProfessional.name}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color);">
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="summary-item">
+            <span class="summary-label">Profissional:</span>
+            <span class="summary-value">${selectedProfessional.name}</span>
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="summary-item">
+          <span class="summary-label">Data:</span>
+          <span class="summary-value">${formatDateBR(selectedDate)}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Horário:</span>
+          <span class="summary-value">${selectedTime}</span>
+        </div>
+      `;
+
+      if (config.features.showPrices) {
+        html += `
+          <div class="summary-item">
+            <span class="summary-label">Valor:</span>
+            <span class="summary-value">R$ ${parseFloat(selectedService.price).toFixed(2)}</span>
+          </div>
+        `;
+      }
+
+      html += '</div>';
+
+      html += `
+        <div class="navigation-buttons">
+          <button class="btn btn-secondary" onclick="prevStep()">Voltar</button>
+          <button class="btn btn-primary" onclick="confirmBooking()">Confirmar Agendamento</button>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function formatDateBR(dateStr) {
+      const [year, month, day] = dateStr.split('-');
+      return `${day}/${month}/${year}`;
+    }
+
+    async function confirmBooking() {
+      const container = document.getElementById('bookingContent');
+      container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Processando agendamento...</p></div>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/webagendamento/${COMPANY_ID}/appointments`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            serviceId: selectedService.id,
+            professionalId: selectedProfessional?.id,
+            date: selectedDate,
+            time: selectedTime,
+            customer: customerData
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erro ao criar agendamento');
+        }
+
+        // Salvar dados do cliente no localStorage para consulta posterior
+        localStorage.setItem('lastBooking', JSON.stringify({
+          companyId: COMPANY_ID,
+          customerName: customerData.name,
+          customerWhatsApp: customerData.phone,
+          appointmentId: data.id
+        }));
+
+        container.innerHTML = `
+          <div class="success">
+            <h3>🎉 Agendamento Solicitado!</h3>
+            <p>Seu agendamento foi enviado para a empresa.</p>
+            <p style="margin-top: 12px; color: #fbbf24;">⏳ Status: Aguardando confirmação da empresa</p>
+            <p style="margin-top: 8px;">${selectedService.name}<br>${formatDateBR(selectedDate)} às ${selectedTime}</p>
+            <p style="margin-top: 16px; font-size: 14px; color: #94a3b8;">
+              💡 Você pode acompanhar o status clicando em "Meus Agendamentos" no topo da página
+            </p>
+          </div>
+          <div class="navigation-buttons">
+            <button class="btn btn-primary" onclick="showMyAppointments()">Ver Meus Agendamentos</button>
+            <button class="btn btn-secondary" onclick="window.location.reload()">Novo Agendamento</button>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Erro ao confirmar:', error);
+        showError(error.message || 'Erro ao confirmar agendamento. Tente novamente.');
+        renderStep(4);
+      }
+    }
+
+    let autoRefreshInterval = null;
+
+    async function showMyAppointments() {
+      const container = document.getElementById('bookingContent');
+      const lastBooking = localStorage.getItem('lastBooking');
+
+      // Limpar interval anterior se existir
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+      }
+
+      if (!lastBooking) {
+        container.innerHTML = `
+          <div class="error">
+            <h3>❌ Nenhum agendamento encontrado</h3>
+            <p>Você ainda não fez nenhum agendamento ou os dados não foram salvos.</p>
+            <p style="margin-top: 12px;">Por favor, faça um novo agendamento primeiro.</p>
+          </div>
+          <div class="navigation-buttons">
+            <button class="btn btn-primary" onclick="window.location.reload()">Fazer Agendamento</button>
+          </div>
+        `;
+        return;
+      }
+
+      const booking = JSON.parse(lastBooking);
+      container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando agendamentos...</p></div>';
+
+      try {
+        const response = await fetch(
+          `${API_BASE}/api/appointments/cliente/${booking.companyId}?nome=${encodeURIComponent(booking.customerName)}&whatsapp=${booking.customerWhatsApp}`
+        );
+
+        if (!response.ok) {
+          container.innerHTML = `
+            <div class="error">
+              <h3>❌ Erro ao carregar agendamentos</h3>
+              <p>Ocorreu um erro ao buscar seus agendamentos. Tente novamente.</p>
+            </div>
+            <div class="navigation-buttons">
+              <button class="btn btn-primary" onclick="window.location.reload()">Tentar Novamente</button>
+            </div>
+          `;
+          return;
+        }
+
+        const text = await response.text();
+        let appointments;
+
+        try {
+          appointments = JSON.parse(text);
+        } catch (e) {
+          console.error('Erro ao parsear JSON:', e, 'Resposta:', text);
+          container.innerHTML = `
+            <div class="error">
+              <h3>❌ Erro ao processar dados</h3>
+              <p>Ocorreu um erro ao processar os dados do servidor.</p>
+            </div>
+            <div class="navigation-buttons">
+              <button class="btn btn-primary" onclick="window.location.reload()">Tentar Novamente</button>
+            </div>
+          `;
+          return;
+        }
+
+        if (!appointments || appointments.length === 0) {
+          container.innerHTML = `
+            <div class="error">
+              <h3>❌ Nenhum agendamento encontrado</h3>
+              <p>Não encontramos agendamentos para os seus dados.</p>
+            </div>
+            <div class="navigation-buttons">
+              <button class="btn btn-primary" onclick="window.location.reload()">Fazer Agendamento</button>
+          </div>
+          `;
+          return;
+        }
+
+        // Filtrar agendamentos removidos do histórico
+        const history = JSON.parse(localStorage.getItem('appointmentHistory') || '[]');
+        appointments = appointments.filter(a => !history.includes(a.id));
+
+        if (appointments.length === 0) {
+          container.innerHTML = `
+            <div class="error">
+              <h3>❌ Nenhum agendamento encontrado</h3>
+              <p>Você removeu todos os agendamentos do seu histórico.</p>
+            </div>
+            <div class="navigation-buttons">
+              <button class="btn btn-primary" onclick="window.location.reload()">Fazer Agendamento</button>
+            </div>
+          `;
+          return;
+        }
+
+        // Configurar auto-refresh a cada 10 segundos
+        autoRefreshInterval = setInterval(() => {
+          const currentContainer = document.getElementById('bookingContent');
+          // Só refresh se ainda estiver na tela de agendamentos
+          if (currentContainer && currentContainer.innerHTML.includes('Meus Agendamentos')) {
+            showMyAppointments();
+          } else {
+            clearInterval(autoRefreshInterval);
+          }
+        }, 10000);
+
+        // Renderizar lista de agendamentos
+        let html = '<h2 class="step-title">📋 Meus Agendamentos</h2>';
+
+        appointments.forEach(appointment => {
+          const statusConfig = {
+            'pending': { icon: '⏳', text: 'Aguardando confirmação', color: '#fbbf24' },
+            'confirmed': { icon: '✅', text: 'Confirmado', color: '#10b981' },
+            'cancelled': { icon: '❌', text: 'Cancelado', color: '#ef4444' },
+            'completed': { icon: '🎉', text: 'Concluído', color: '#8b5cf6' }
+          };
+
+          const status = statusConfig[appointment.status] || statusConfig['pending'];
+
+          // Fallback para campos que podem não existir em agendamentos antigos
+          const serviceName = appointment.serviceName || appointment.service?.name || 'Serviço';
+          const servicePrice = appointment.servicePrice || appointment.service?.price || appointment.price || 0;
+          const professionalName = appointment.professionalName || appointment.professional?.name || null;
+
+          html += `
+            <div class="appointment-card">
+              <div class="appointment-header">
+                <span class="appointment-status" style="color: ${status.color}; background: ${status.color}20;">
+                  ${status.icon} ${status.text}
+                </span>
+                ${appointment.status === 'pending' ? `
+                  <button class="cancel-appointment-btn" onclick="cancelAppointment(${appointment.id})">
+                    ✕ Cancelar
+                  </button>
+                ` : (appointment.status === 'completed' || appointment.status === 'cancelled') ? `
+                  <button class="delete-history-btn" onclick="deleteFromHistory(${appointment.id})" title="Remover do histórico">
+                    ✕
+                  </button>
+                ` : ''}
+              </div>
+              <div class="appointment-body">
+                <h4>${serviceName}</h4>
+                <p>📅 ${formatDateBR(appointment.date)} às ${appointment.time}</p>
+                ${professionalName ? `<p>👤 Profissional: ${professionalName}</p>` : ''}
+                ${servicePrice > 0 ? `<p>💰 R$ ${parseFloat(servicePrice).toFixed(2)}</p>` : ''}
+              </div>
+              ${appointment.status === 'pending' ? `
+                <div class="appointment-warning">
+                  ⚠️ Aguardando confirmação da empresa. Não esqueça de chegar no horário!
+                </div>
+              ` : appointment.status === 'confirmed' ? `
+                <div class="appointment-success">
+                  ✅ Agendamento confirmado! A empresa é séria, não falte! 😊
+                </div>
+              ` : appointment.status === 'cancelled' ? `
+                <div class="appointment-error">
+                  ❌ Este agendamento foi cancelado. A empresa ou funcionário não pode atender neste horário.
+                  Tente agendar em outro horário ou dia.
+                </div>
+              ` : ''}
+            </div>
+          `;
+        });
+
+        html += `
+          <div class="navigation-buttons">
+            <button class="btn btn-primary" onclick="stopAutoRefreshAndReload()">Voltar ao Agendamento</button>
+          </div>
+        `;
+
+        container.innerHTML = html;
+      } catch (error) {
+        console.error('Erro ao carregar agendamentos:', error);
+        showError('Erro ao carregar seus agendamentos. Tente novamente.');
+      }
+    }
+
+    async function cancelAppointment(appointmentId) {
+      if (!confirm('Tem certeza que deseja cancelar este agendamento?')) {
+        return;
+      }
+
+      const container = document.getElementById('bookingContent');
+      container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Cancelando agendamento...</p></div>';
+
+      try {
+        const lastBooking = JSON.parse(localStorage.getItem('lastBooking'));
+        const response = await fetch(
+          `${API_BASE}/api/appointments/cliente/${lastBooking.companyId}/${appointmentId}`,
+          { method: 'DELETE' }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erro ao cancelar agendamento');
+        }
+
+        alert('Agendamento cancelado com sucesso!');
+        showMyAppointments();
+      } catch (error) {
+        console.error('Erro ao cancelar:', error);
+        showError(error.message || 'Erro ao cancelar agendamento. Tente novamente.');
+      }
+    }
+
+    function deleteFromHistory(appointmentId) {
+      if (!confirm('Tem certeza que deseja remover este agendamento do seu histórico?')) {
+        return;
+      }
+
+      // Adicionar ID ao histórico de ocultados (não remove do servidor)
+      let history = JSON.parse(localStorage.getItem('appointmentHistory') || '[]');
+      if (!history.includes(appointmentId)) {
+        history.push(appointmentId);
+      }
+      localStorage.setItem('appointmentHistory', JSON.stringify(history));
+
+      // Recarregar a lista
+      showMyAppointments();
+    }
+
+    function stopAutoRefreshAndReload() {
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+      }
+      window.location.reload();
+    }
+
+    function showError(message) {
+      const container = document.getElementById('bookingContent');
+      container.innerHTML = `
+        <div class="error">${message}</div>
+        <div class="navigation-buttons">
+          <button class="btn btn-secondary" onclick="window.location.reload()">Tentar Novamente</button>
+        </div>
+      `;
+    }
+
+    function nextStep() {
+      if (currentStep < 5) {
+        renderStep(currentStep + 1);
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        renderStep(currentStep - 1);
+      }
+    }
+
+    // Iniciar
+    init();
+  </script>
+</body>
+</html>

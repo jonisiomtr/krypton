@@ -1,0 +1,78 @@
+{
+  "enabled": true,
+  "theme": "modern",
+  "customDomain": null,
+  "hero": {
+    "title": "açai",
+    "subtitle": "Agende seu horário de forma rápida e fácil",
+    "imageUrl": "",
+    "showLogo": true
+  },
+  "colors": {
+    "primary": "#e0a96d",
+    "secondary": "#c59257",
+    "accent": "#c59257",
+    "background": "#121212",
+    "text": "#e0a96d"
+  },
+  "features": {
+    "showPrices": true,
+    "showProfessionals": true,
+    "showWhatsAppButton": true,
+    "whatsappNumber": "559191873356",
+    "requirePayment": false,
+    "requireDeposit": false,
+    "depositAmount": 0
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "twitter": "",
+    "linkedin": ""
+  },
+  "businessHours": {
+    "enableForAllDays": true,
+    "hours": {
+      "0": {
+        "enabled": false,
+        "open": "09:00",
+        "close": "18:00"
+      },
+      "1": {
+        "enabled": true,
+        "open": "09:00",
+        "close": "18:00"
+      },
+      "2": {
+        "enabled": true,
+        "open": "09:00",
+        "close": "18:00"
+      },
+      "3": {
+        "enabled": true,
+        "open": "09:00",
+        "close": "18:00"
+      },
+      "4": {
+        "enabled": true,
+        "open": "09:00",
+        "close": "18:00"
+      },
+      "5": {
+        "enabled": true,
+        "open": "09:00",
+        "close": "18:00"
+      },
+      "6": {
+        "enabled": true,
+        "open": "09:00",
+        "close": "14:00"
+      }
+    }
+  },
+  "notifications": {
+    "confirmation": true,
+    "reminder24h": true,
+    "reminder2h": true
+  }
+}
