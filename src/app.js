@@ -28,8 +28,12 @@ const server = http.createServer(api)
 
 const io = new Server(server, {
   cors: {
-    origin: '*'
-  }
+    origin: '*',
+    methods: ['GET', 'POST'],
+    credentials: true
+  },
+  transports: ['websocket', 'polling'],
+  allowEIO3: true
 })
 
 global.io = io
