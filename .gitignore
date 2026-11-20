@@ -15,9 +15,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Sessions
-sessions/
-sessionsData/
+# Sessions (keep directory, ignore contents)
+sessions/*.json
+sessionsData/*.json
 src/superadmin/whatsapp-auth/
 src/tmp/
 

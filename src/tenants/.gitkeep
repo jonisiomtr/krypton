@@ -1,0 +1,2 @@
+# This file ensures the tenants directory exists in Git
+# Actual tenant data is tracked via .gitignore
