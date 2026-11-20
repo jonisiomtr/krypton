@@ -15,7 +15,7 @@ import '../styles/company-modulos.css'
 import '../App.css'
 
 const socket =
-io(import.meta.env.VITE_API_URL || 'http://localhost:4177')
+io((import.meta.env.VITE_API_URL || 'http://localhost:4177').replace('/api', ''))
 
 export default function Company() {
 
