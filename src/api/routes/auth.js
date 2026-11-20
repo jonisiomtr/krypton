@@ -677,10 +677,12 @@ router.post('/register/verify', async (req, res) => {
 
 // LOGIN
 router.post('/login', async (req, res) => {
+  console.log('🔐 Login attempt:', req.body)
   const { username, password } = req.body
-  
+
   // ADMIN
   if (username === 'admin' && password === '123') {
+    console.log('✅ Admin login successful')
     const token = jwt.generate({
       type: 'admin'
     })
