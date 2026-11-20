@@ -572,7 +572,6 @@
 .notifications-modal {
   max-width: 400px;
   width: 90%;
-}
   max-height: 80vh;
   overflow: hidden;
   animation: modalSlideIn 0.3s ease;
