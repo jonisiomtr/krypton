@@ -18,6 +18,8 @@ yarn-error.log*
 # Sessions
 sessions/
 sessionsData/
+src/superadmin/whatsapp-auth/
+src/tmp/
 
 # Database
 *.db
@@ -32,6 +34,16 @@ src/tenants/*/orders.json
 src/tenants/*/services.json
 src/tenants/*/customers.json
 src/tenants/*/config.json
+src/tenants/*/appointments.json
+src/tenants/*/messages.json
+src/tenants/*/pdv.json
+src/tenants/*/professionals.json
+src/tenants/*/schedule.json
+src/tenants/*/site-config.json
+src/tenants/*/subscribers.json
+src/tenants/*/subscription.json
+src/tenants/*/webagendamento.json
+src/tenants/*/website.json
 
 # IDE
 .vscode/
