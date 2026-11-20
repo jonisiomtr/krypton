@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react'
 
 import '../../styles/painelEmpresas/produtos.css'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:4177'
+
 export default function Services() {
 
   const [services, setServices] = useState([])
@@ -24,7 +28,7 @@ async function loadSchedule() {
   try {
 
     const res = await fetch(
-      `${window.location.origin}/api/schedule`,
+      `${API_BASE_URL}/api/schedule`,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -51,7 +55,7 @@ async function saveSchedule() {
   try {
 
     await fetch(
-      `${window.location.origin}/api/schedule`,
+      `${API_BASE_URL}/api/schedule`,
       {
         method: 'POST',
 
@@ -85,7 +89,7 @@ async function saveSchedule() {
   async function loadServices() {
 
     const res = await fetch(
-      `${window.location.origin}/api/services`,
+      `${API_BASE_URL}/api/services`,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -103,7 +107,7 @@ async function saveSchedule() {
       if (editingService) {
         // Editar serviço existente
         const res = await fetch(
-          `${window.location.origin}/api/services/${editingService.id}`,
+          `${API_BASE_URL}/api/services/${editingService.id}`,
           {
             method: 'PUT',
             headers: {
@@ -134,7 +138,7 @@ async function saveSchedule() {
       } else {
         // Adicionar novo serviço
         const res = await fetch(
-          `${window.location.origin}/api/services`,
+          `${API_BASE_URL}/api/services`,
           {
             method: 'POST',
             headers: {
@@ -244,7 +248,7 @@ async function saveSchedule() {
         if (companyId && backup.sieServices) {
           try {
             await fetch(
-              `${window.location.origin}/api/webagendamento/${companyId}/services/sync`,
+              `${API_BASE_URL}/api/webagendamento/${companyId}/services/sync`,
               {
                 method: 'POST',
                 headers: {
@@ -273,7 +277,7 @@ async function saveSchedule() {
   async function removeService(id) {
 
     const res = await fetch(
-      `${window.location.origin}/api/services/${id}`,
+      `${API_BASE_URL}/api/services/${id}`,
       {
         method: 'DELETE',
 

@@ -4,6 +4,10 @@ import api from '../../services/api'
 import '../../styles/painelEmpresas/webagendamento.css'
 import '../../styles/botao-upload-image.css'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:4177'
+
 export default function OnlineBooking() {
   const companyId = localStorage.getItem('companyId')
   const [loading, setLoading] = useState(true)
@@ -166,9 +170,7 @@ export default function OnlineBooking() {
       }
 
       setConfig(loadedConfig)
-      const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:4177'
-      const baseUrl = apiBaseUrl.startsWith('http') ? apiBaseUrl : window.location.origin
-      setPreviewUrl(`${baseUrl}/booking/${companyId}`)
+      setPreviewUrl(`${API_BASE_URL}/booking/${companyId}`)
     } catch (err) {
       console.log('Erro ao carregar configuração:', err)
       alert('Erro ao carregar configurações')
@@ -244,7 +246,7 @@ export default function OnlineBooking() {
     formData.append('image', file)
 
     try {
-      const res = await fetch(`${window.location.origin}/api/upload`, {
+      const res = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData
       })
@@ -267,7 +269,7 @@ export default function OnlineBooking() {
     formData.append('image', file)
 
     try {
-      const res = await fetch(`${window.location.origin}/api/upload`, {
+      const res = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData
       })
@@ -290,7 +292,7 @@ export default function OnlineBooking() {
     formData.append('image', file)
 
     try {
-      const res = await fetch(`${window.location.origin}/api/upload`, {
+      const res = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData
       })

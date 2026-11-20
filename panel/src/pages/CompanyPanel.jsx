@@ -12,6 +12,10 @@ import CompanyQRCode from './panel/CompanyQRCode'
 import Modules from './panel/Modules'
 import ModulesPurchase from './panel/Modules'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:4177'
+
 import {
   OverviewIcon,
   ShoppingBagIcon,
@@ -217,7 +221,7 @@ export default function CompanyPanel() {
       setCompanyData({
         displayName: response.data.displayName || '',
         logo: response.data.logo
-  ? `${window.location.origin}${response.data.logo}?t=${Date.now()}`
+  ? `${API_BASE_URL}${response.data.logo}?t=${Date.now()}`
   : 'https://placehold.co/100x100',
         phone: response.data.phone || '',
         email: response.data.email || '',

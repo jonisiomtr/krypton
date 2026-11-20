@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import '../../styles/botao-upload-image.css'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:4177'
+
 export default function Products() {
 
   const [products, setProducts] =
@@ -50,7 +54,7 @@ const [showAll, setShowAll] = useState(false)
   async function loadProducts() {
 
     const res = await fetch(
-      `${window.location.origin}/api/products`,
+      `${API_BASE_URL}/api/products`,
       {
 
         headers: {
@@ -92,7 +96,7 @@ const [showAll, setShowAll] = useState(false)
   const res =
   await fetch(
 
-    `${window.location.origin}/api/upload`,
+    `${API_BASE_URL}/api/upload`,
 
     {
 
@@ -138,7 +142,7 @@ const [showAll, setShowAll] = useState(false)
 
     const res = await fetch(
 
-      `${window.location.origin}/api/products`,
+      `${API_BASE_URL}/api/products`,
 
       {
 
@@ -222,7 +226,7 @@ const [showAll, setShowAll] = useState(false)
 
     const res = await fetch(
 
-      `${window.location.origin}/api/products/${id}`,
+      `${API_BASE_URL}/api/products/${id}`,
 
       {
 
@@ -277,7 +281,7 @@ const [showAll, setShowAll] = useState(false)
     }
 
     const res = await fetch(
-      `${window.location.origin}/api/products/${editingProduct.id}`,
+      `${API_BASE_URL}/api/products/${editingProduct.id}`,
       {
         method: 'PUT',
         headers: {
@@ -339,7 +343,7 @@ const [showAll, setShowAll] = useState(false)
   async function downloadBackup() {
     try {
       const res = await fetch(
-        `${window.location.origin}/api/products/backup`,
+        `${API_BASE_URL}/api/products/backup`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -399,7 +403,7 @@ const [showAll, setShowAll] = useState(false)
           if (!confirmed) return
 
           const res = await fetch(
-            `${window.location.origin}/api/products/restore`,
+            `${API_BASE_URL}/api/products/restore`,
             {
               method: 'POST',
               headers: {
@@ -451,7 +455,7 @@ const [showAll, setShowAll] = useState(false)
           if (!confirmed) return
 
           const res = await fetch(
-            `${window.location.origin}/api/products/import-csv`,
+            `${API_BASE_URL}/api/products/import-csv`,
             {
               method: 'POST',
               headers: {

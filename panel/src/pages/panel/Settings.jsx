@@ -72,6 +72,10 @@ useState(
   'https://placehold.co/150'
 )
 
+  const API_BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    'http://localhost:4177'
+
   const [loading, setLoading] =
   useState(false)
 
@@ -125,7 +129,7 @@ useState(
     if (config.logo) {
 
       setPreview(
-        `${window.location.origin}${config.logo}?t=${Date.now()}`
+        `${API_BASE_URL}${config.logo}?t=${Date.now()}`
       )
 
     }
@@ -231,7 +235,7 @@ useState(
       ) {
 
         const logoUrl =
-        `${window.location.origin}${response.data.config.logo}?t=${Date.now()}`
+        `${API_BASE_URL}${response.data.config.logo}?t=${Date.now()}`
 
         console.log(
   'Nova logo:',
