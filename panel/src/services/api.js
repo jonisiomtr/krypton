@@ -4,7 +4,7 @@ const api = axios.create({
 
   baseURL:
     import.meta.env.VITE_API_URL ||
-    window.location.origin
+    'http://localhost:4177'
 
 })
 
